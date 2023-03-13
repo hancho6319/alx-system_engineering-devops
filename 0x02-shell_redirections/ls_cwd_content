@@ -1,0 +1,9 @@
+total 20
+drwxr-xr-x 2 root root 118 Mar 13 03:06 .
+drwxr-xr-x 6 root root 104 Mar 13 01:55 ..
+-rwxr-xr-x 1 root root  32 Mar 13 02:00 0-hello_world
+-rwxr-xr-x 1 root root  40 Mar 13 02:19 6-third_line
+-rwxr-xr-x 1 root root  36 Mar 13 03:06 8-cwd_state
+-rw-r--r-- 1 root root 108 Mar 13 02:10 iacta
+-rw-r--r-- 1 root root   0 Mar 13 03:07 ls_cwd_content
+-rw-r--r-- 1 root root  27 Mar 13 01:57 README.md
