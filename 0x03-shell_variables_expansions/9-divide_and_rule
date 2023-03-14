@@ -1,4 +1,2 @@
 #!/bin/bash
-POWER=100
-DEVIDE=50
 echo $[POWER/DEVIDE]
