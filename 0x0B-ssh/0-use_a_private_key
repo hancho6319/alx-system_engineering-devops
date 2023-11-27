@@ -1,0 +1,2 @@
+#connecting to my sever
+ssh -i ~/ssh/school ubuntu@100.25.169.128
