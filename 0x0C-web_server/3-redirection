@@ -4,7 +4,7 @@
 sudo apt-get update
 sudo apt-get install -y nginx
 
-echo "hello world" | sudo tee /var/www/html/index.html
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
 str_4_replacement="server_name _;\n\twrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
 
