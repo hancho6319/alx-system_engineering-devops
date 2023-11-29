@@ -10,4 +10,4 @@ str_4_replacement="server_name _;\n\twrite ^\/redirect_me https:\/\/github.com\/
 
 sudo sed -i "s/sever_name _;/$str_4_replacement/" /etc/nginx/sites-enabled/default
 
-sudo systemctl restart nginx
+sudo service nginx restart

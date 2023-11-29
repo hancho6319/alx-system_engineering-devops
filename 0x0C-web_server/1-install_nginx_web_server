@@ -6,4 +6,4 @@ sudo apt-get install -y nginx
 
 echo "hello world" | sudo tee /var/www/html/index.html
 
-sudo systemctl restart nginx
+sudo sevice nginx restart
