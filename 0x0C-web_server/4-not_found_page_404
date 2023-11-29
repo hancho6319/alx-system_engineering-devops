@@ -10,4 +10,13 @@ str_4_replacement="server_name _;\n\twrite ^\/redirect_me https:\/\/github.com\/
 
 sudo sed -i "s/sever_name _;/$str_4_replacement/" /etc/nginx/sites-enabled/default
 
+#4-not_found_page_404
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/not_found_page_404.html
+
+str_4_not_found_page_404="listen 80 default_server;\n\terror_page 404 \/not_found_page_404.html;\n\tlocation = \/not_found_page_404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+
+sudo sed -i "s/listen 80 default_server;/$str_4_not_found_page_404/" /etc/nginx/sites-enabled/default
+
+
+#restarting nginx
 sudo systemctl restart nginx
