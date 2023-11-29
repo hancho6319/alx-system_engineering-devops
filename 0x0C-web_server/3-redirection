@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#This is performing 301 move permanently
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+echo "hello world" | sudo tee /var/www/html/index.html
+
+str_4_replacement="server_name _;\n\twrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
+
+sudo sed -i "s/sever_name _;/$str_4_replacement/" /etc/nginx/sites-enabled/default
+
+sudo systemctl restart nginx
