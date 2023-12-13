@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Configures the nginx server to linsten on port 80
+
+# By removing the default nginx config file we have
+rm /etc/nginx/sites-enabled/default
+
+# Config nginx by creating another symbolic linked file
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# By restarting the nginx server we have
+service  nginx restart
