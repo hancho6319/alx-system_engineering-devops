@@ -26,10 +26,10 @@ if __name__ == "__main__":
         print("Please provide an employee ID.")
     else:
         emp_id = argv[1]
-        tasks_url = f'https://jsonplaceholder.typicode.com/users/{emp_id}/todos'
+        t_url = f'https://jsonplaceholder.typicode.com/users/{emp_id}/todos'
         user_url = f'https://jsonplaceholder.typicode.com/users/{emp_id}'
 
-        tasks_data = fetch_data(tasks_url)
+        tasks_data = fetch_data(t_url)
         user_data = fetch_data(user_url)
 
         if tasks_data and user_data:
