@@ -11,10 +11,11 @@ import urllib.request
 
 if __name__ == "__main__":
     emp_id = argv[1]
-    url_name = 'https://jsonplaceholder.typicode.com/users/{}'.format(emp_id)
-    url_id = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(emp_id)
+    url_name = f'https://jsonplaceholder.typicode.com/users/{emp_id}'
+    url_id = f'https://jsonplaceholder.typicode.com/users/{emp_id}/todos'
 
-    with urllib.request.urlopen(url_id) as response_id, urllib.request.urlopen(url_name) as response_name:
+    with urllib.request.urlopen(url_id) as response_id, \
+            urllib.request.urlopen(url_name) as response_name:
         employee = json.loads(response_id.read().decode())
         employeeName = json.loads(response_name.read().decode())
 
@@ -22,7 +23,7 @@ if __name__ == "__main__":
 
     totalTasks = sum(1 for done_task in employee if done_task['completed'])
 
-    print("Employee {} is done with tasks({}/{}):".format(name, totalTasks, len(employee)))
+    print(f"Employee {name} is done with tasks({totalTasks}/{len(employee)}):")
 
     for done_task in employee:
         if done_task['completed']:
