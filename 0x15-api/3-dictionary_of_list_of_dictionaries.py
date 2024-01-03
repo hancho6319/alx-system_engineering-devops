@@ -1,23 +1,29 @@
 #!/usr/bin/python3
 """
-Script that, using this REST API, for a given employee ID, returns
-information about his/her TODO list progress
-and export data in the JSON format.
+Script that retrieves data from a REST API 
+for employee TODO lists
+and exports the information in JSON format.
 """
 
 import json
 import requests
 from sys import argv
 
-if __name__ == "__main__":
-    api_users = requests.get("https://jsonplaceholder.typicode.com/users").json()
-    api_todos = requests.get('https://jsonplaceholder.typicode.com/todos').json()
-    
-    all_employee_tasks = {}
+def fetch_data(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        print(f"Error fetching data from {url}: {e}")
+        return None
 
-    for user in api_users:
+def generate_employee_tasks(users_data, todos_data):
+    employee_tasks = {}
+
+    for user in users_data:
         user_tasks = []
-        for task in api_todos:
+        for task in todos_data:
             if task.get('userId') == user.get('id'):
                 task_info = {
                     "username": user.get('username'),
@@ -25,7 +31,21 @@ if __name__ == "__main__":
                     "completed": task.get('completed')
                 }
                 user_tasks.append(task_info)
-        all_employee_tasks[user.get('id')] = user_tasks
+        employee_tasks[user.get('id')] = user_tasks
 
-    with open('all_employees_tasks.json', mode='w') as json_file:
-        json.dump(all_employee_tasks, json_file)
+    return employee_tasks
+
+if __name__ == "__main__":
+    users_url = "https://jsonplaceholder.typicode.com/users"
+    todos_url = "https://jsonplaceholder.typicode.com/todos"
+
+    users_data = fetch_data(users_url)
+    todos_data = fetch_data(todos_url)
+
+    if users_data and todos_data:
+        all_employee_tasks = generate_employee_tasks(users_data, todos_data)
+
+        with open('all_employees_tasks.json', mode='w') as json_file:
+            json.dump(all_employee_tasks, json_file)
+            print("Data successfully exported to 'all_employees_tasks.json'")
+    else:
