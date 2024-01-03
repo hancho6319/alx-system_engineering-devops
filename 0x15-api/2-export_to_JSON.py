@@ -9,23 +9,26 @@ import json
 import requests
 from sys import argv
 
+
 def fetch_data(url):
     try:
         with requests.Session() as sessionReq:
             response = sessionReq.get(url)
-            response.raise_for_status()  # Raise an exception for 4XX/5XX status codes
+            response.raise_for_status()
             return response.json()
     except requests.RequestException as e:
         print(f"Error fetching data: {e}")
         return None
 
+
 if __name__ == "__main__":
     if len(argv) < 2:
         print("Please provide an employee ID.")
     else:
-        employee_id = argv[1]
-        tasks_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
-        user_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+        emp_id = argv[1]
+        tasks_url = f'https://jsonplaceholder.typicode.com/users/{emp_id}\
+            /todos'
+        user_url = f'https://jsonplaceholder.typicode.com/users/{emp_id}'
 
         tasks_data = fetch_data(tasks_url)
         user_data = fetch_data(user_url)
@@ -41,9 +44,9 @@ if __name__ == "__main__":
                     "username": user_name,
                 })
 
-            update_user = {employee_id: total_tasks}
-            file_json = f"{employee_id}.json"
+            update_user = {emp_id: total_tasks}
+            file_json = f"{emp_id}.json"
 
             with open(file_json, 'w') as file:
                 json.dump(update_user, file)
-                print(f"Data for employee {employee_id} written to {file_json}")
+                print(f"Data for employee {emp_id} written to {file_json}")
