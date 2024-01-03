@@ -3,18 +3,16 @@
    your Python script to export data 
    in the CSV format.
 """
-
 import json
 import urllib.request
 from sys import argv
 
 if __name__ == "__main__":
-    emp_id = argv[1]
-    url_id = f'https://jsonplaceholder.typicode.com/users/{emp_id}/todos'
-    url_name = f'https://jsonplaceholder.typicode.com/users/{emp_id}'
+    idEmp = argv[1]
+    idURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(idEmp)
+    nameURL = 'https://jsonplaceholder.typicode.com/users/{}'.format(idEmp)
 
-    with urllib.request.urlopen(url_id) as response_id, \
-            urllib.request.urlopen(url_name) as response_name:
+    with urllib.request.urlopen(idURL) as response_id, urllib.request.urlopen(nameURL) as response_name:
         employee = json.loads(response_id.read().decode())
         employeeName = json.loads(response_name.read().decode())
 
@@ -30,8 +28,8 @@ if __name__ == "__main__":
                 "username": usr,
             })
 
-    updateUser = {emp_id: totalTasks}
+    updateUser = {idEmp: totalTasks}
 
-    file_Json = emp_id + ".json"
+    file_Json = idEmp + ".json"
     with open(file_Json, 'w') as f:
         json.dump(updateUser, f)
