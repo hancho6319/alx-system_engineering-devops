@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Using what you did in the task #0, extend
-   your Python script to export data 
-   in the CSV format.
+   your Python script to export data in the CSV format.
 """
 import json
 import urllib.request
@@ -12,7 +11,8 @@ if __name__ == "__main__":
     idURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(idEmp)
     nameURL = 'https://jsonplaceholder.typicode.com/users/{}'.format(idEmp)
 
-    with urllib.request.urlopen(idURL) as response_id, urllib.request.urlopen(nameURL) as response_name:
+    with urllib.request.urlopen(idURL) as response_id, \
+            urllib.request.urlopen(nameURL) as response_name:
         employee = json.loads(response_id.read().decode())
         employeeName = json.loads(response_name.read().decode())
 
