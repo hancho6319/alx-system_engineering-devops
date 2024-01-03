@@ -6,33 +6,44 @@ and exports data in the JSON format.
 """
 
 import json
-import urllib.request
+import requests
 from sys import argv
 
+def fetch_data(url):
+    try:
+        with requests.Session() as sessionReq:
+            response = sessionReq.get(url)
+            response.raise_for_status()  # Raise an exception for 4XX/5XX status codes
+            return response.json()
+    except requests.RequestException as e:
+        print(f"Error fetching data: {e}")
+        return None
+
 if __name__ == "__main__":
-    idEmp = argv[1]
-    idURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(idEmp)
-    nameURL = 'https://jsonplaceholder.typicode.com/users/{}'.format(idEmp)
+    if len(argv) < 2:
+        print("Please provide an employee ID.")
+    else:
+        employee_id = argv[1]
+        tasks_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
+        user_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
 
-    with urllib.request.urlopen(idURL) as response_id, \
-            urllib.request.urlopen(nameURL) as response_name:
-        employee = json.loads(response_id.read().decode())
-        employeeName = json.loads(response_name.read().decode())
+        tasks_data = fetch_data(tasks_url)
+        user_data = fetch_data(user_url)
 
-    usr = employeeName['username']
+        if tasks_data and user_data:
+            user_name = user_data['username']
+            total_tasks = []
 
-    totalTasks = []
+            for task in tasks_data:
+                total_tasks.append({
+                    "task": task.get('title'),
+                    "completed": task.get('completed'),
+                    "username": user_name,
+                })
 
-    for all_Emp in employee:
-        totalTasks.append(
-            {
-                "task": all_Emp.get('title'),
-                "completed": all_Emp.get('completed'),
-                "username": usr,
-            })
+            update_user = {employee_id: total_tasks}
+            file_json = f"{employee_id}.json"
 
-    updateUser = {idEmp: totalTasks}
-
-    file_Json = idEmp + ".json"
-    with open(file_Json, 'w') as f:
-        json.dump(updateUser, f)
+            with open(file_json, 'w') as file:
+                json.dump(update_user, file)
+                print(f"Data for employee {employee_id} written to {file_json}")
